@@ -95,6 +95,36 @@ class Calculator(tkinter.Tk):
         equal = tkinter.Button(self, self.button_params_main, text='=',
                                command=self.button_equal).grid(row=6, columnspan=2, column=2, sticky="nsew")
 
+        def button_click(self, char):
+            self.calc_operator += str(char)
+            self.text_input.set(self.calc_operator)
+
+        def button_clear_all(self):
+            self.calc_operator = ""
+            self.text_input.set("")
+
+        def button_delete(self):
+            text = self.calc_operator[:-1]
+            self.calc_operator = text
+            self.text_input.set(text)
+
+        def trig_asin(self):
+            if 359.0 > float(self.calc_operator) > -359.0:
+                result = str(np.arcsin(math.radians(float(self.calc_operator))))
+                self.calc_operator = result
+                self.text_input.set(result)
+            elif float(self.calc_operator) == 360.0 or float(self.calc_operator) == -360.0:
+                result = str(np.arcsin(math.radians(0.0)))
+                self.calc_operator = result
+                self.text_input.set(result)
+            else:
+                messagebox.showinfo(title="Количество градусов", message="Введите градусы от -360 до 360")
+
+        def button_equal(self):
+            temp_op = str(eval(self.calc_operator))
+            self.text_input.set(temp_op)
+            self.calc_operator = temp_op
+
 if __name__ == "__main__":
     tk_calc = Calculator()
     tk_calc.mainloop()
