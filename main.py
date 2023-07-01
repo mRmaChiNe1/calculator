@@ -121,9 +121,15 @@ class Calculator(tkinter.Tk):
             messagebox.showinfo(title="Количество градусов", message="Введите градусы от -360 до 360")
 
     def button_equal(self):
-        temp_op = str(eval(self.calc_operator))
-        self.text_input.set(temp_op)
-        self.calc_operator = temp_op
+        try:
+            temp_op = str(eval(self.calc_operator))
+            self.text_input.set(temp_op)
+        except ZeroDivisionError:
+            self.text_input.set("Infinity")
+        except NameError:
+            self.text_input.set("Error. Try again")
+        else:
+            self.calc_operator = temp_op
 
 
 if __name__ == "__main__":
