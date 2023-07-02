@@ -8,14 +8,17 @@ import numpy as np
 class Calculator(tkinter.Tk):
 
     def __init__(self):
+        """
+        Метод инициализации объекта
+        """
         super().__init__()
         self.title('Calculator')
 
         self.calc_operator = ''
         self.configure(bg="#E2E2E2", bd=20)
         self.text_input = StringVar()
-        self.e = math.exp
-        self.p = math.pi
+        self.e = round(math.e, 6)
+        self.pi = round(math.pi, 6)
         self.E = '*10**'
 
         self.text_display = tkinter.Entry(self, font=('sans-serif', 20, 'bold'), textvariable=self.text_input,
@@ -32,11 +35,10 @@ class Calculator(tkinter.Tk):
                                    command=lambda: self.button_click(')')).grid(row=1, column=1, sticky="nsew")
 
         pi_num = tkinter.Button(self, self.button_params, text='π',
-                                command=lambda: self.button_click(str(math.pi))).grid(row=1, column=2, sticky="nsew")
+                                command=lambda: self.button_click(str(self.pi))).grid(row=1, column=2, sticky="nsew")
 
         eulers_num = tkinter.Button(self, self.button_params, text='e',
-                                    command=lambda: self.button_click(str(math.exp(1)))).grid(row=1, column=3,
-                                                                                              sticky="nsew")
+                                    command=lambda: self.button_click(self.e)).grid(row=1, column=3, sticky="nsew")
 
         # 2 ряд
         asine = tkinter.Button(self, self.button_params, text='asin',
@@ -96,19 +98,32 @@ class Calculator(tkinter.Tk):
                                command=self.button_equal).grid(row=6, columnspan=2, column=2, sticky="nsew")
 
     def button_click(self, char):
+        """
+        Метод обработки нажатия кнопки на форме
+        :param char: символ нажатой кнопки
+        """
         self.calc_operator += str(char)
         self.text_input.set(self.calc_operator)
 
     def button_clear_all(self):
+        """
+        Метод полной очистки текстового поля
+        """
         self.calc_operator = ""
         self.text_input.set("")
 
     def button_delete(self):
+        """
+        Метод удаления символа из текстового поля
+        """
         text = self.calc_operator[:-1]
         self.calc_operator = text
         self.text_input.set(text)
 
     def trig_asin(self):
+        """
+        Метод для расчета арксинуса
+        """
         if 359.0 > float(self.calc_operator) > -359.0:
             result = str(np.arcsin(math.radians(float(self.calc_operator))))
             self.calc_operator = result
@@ -121,6 +136,9 @@ class Calculator(tkinter.Tk):
             messagebox.showinfo(title="Количество градусов", message="Введите градусы от -360 до 360")
 
     def button_equal(self):
+        """
+        Метод для расчета значений, указанных в текстовом поле
+        """
         try:
             temp_op = str(eval(self.calc_operator))
             self.text_input.set(temp_op)
