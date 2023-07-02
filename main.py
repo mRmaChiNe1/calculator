@@ -25,77 +25,42 @@ class Calculator(tkinter.Tk):
                                           bd=5, insertwidth=5, bg='#fff', justify='right').grid(columnspan=5, pady=20)
 
         self.button_params = {'bd': 5, 'fg': '#000', 'bg': '#E2E2E2', 'font': ('sans-serif', 20, 'bold')}
-        self.button_params_main = {'bd': 5, 'fg': '#000', 'bg': '#E2E2E2', 'font': ('sans-serif', 20, 'bold')}
 
-        # 1 ряд
-        left_par = tkinter.Button(self, self.button_params, text='(',
-                                  command=lambda: self.button_click('(')).grid(row=1, column=0, sticky="nsew")
+        self.buttons = [
+            {'name': '(', 'function': lambda: self.button_click('('), 'row': 1, 'column': 0, 'columnspan': 1},
+            {'name': ')', 'function': lambda: self.button_click(')'), 'row': 1, 'column': 1, 'columnspan': 1},
+            {'name': 'π', 'function': lambda: self.button_click(str(self.pi)), 'row': 1, 'column': 2, 'columnspan': 1},
+            {'name': 'e', 'function': lambda: self.button_click(self.e), 'row': 1, 'column': 3, 'columnspan': 1},
 
-        right_par = tkinter.Button(self, self.button_params, text=')',
-                                   command=lambda: self.button_click(')')).grid(row=1, column=1, sticky="nsew")
+            {'name': 'asin', 'function': lambda: self.trig_asin(), 'row': 2, 'column': 0, 'columnspan': 1},
+            {'name': 'DEL', 'function': lambda: self.button_delete(), 'row': 2, 'column': 1, 'columnspan': 1},
+            {'name': 'AC', 'function': lambda: self.button_clear_all(), 'row': 2, 'column': 2, 'columnspan': 1},
+            {'name': '/', 'function': lambda: self.button_click('/'), 'row': 2, 'column': 3, 'columnspan': 1},
 
-        pi_num = tkinter.Button(self, self.button_params, text='π',
-                                command=lambda: self.button_click(str(self.pi))).grid(row=1, column=2, sticky="nsew")
+            {'name': '7', 'function': lambda: self.button_click('7'), 'row': 3, 'column': 0, 'columnspan': 1},
+            {'name': '8', 'function': lambda: self.button_click('8'), 'row': 3, 'column': 1, 'columnspan': 1},
+            {'name': '9', 'function': lambda: self.button_click('9'), 'row': 3, 'column': 2, 'columnspan': 1},
+            {'name': '*', 'function': lambda: self.button_click('*'), 'row': 3, 'column': 3, 'columnspan': 1},
 
-        eulers_num = tkinter.Button(self, self.button_params, text='e',
-                                    command=lambda: self.button_click(self.e)).grid(row=1, column=3, sticky="nsew")
+            {'name': '4', 'function': lambda: self.button_click('4'), 'row': 4, 'column': 0, 'columnspan': 1},
+            {'name': '5', 'function': lambda: self.button_click('5'), 'row': 4, 'column': 1, 'columnspan': 1},
+            {'name': '6', 'function': lambda: self.button_click('6'), 'row': 4, 'column': 2, 'columnspan': 1},
+            {'name': '-', 'function': lambda: self.button_click('-'), 'row': 4, 'column': 3, 'columnspan': 1},
 
-        # 2 ряд
-        asine = tkinter.Button(self, self.button_params, text='asin',
-                               command=self.trig_asin).grid(row=2, column=0, sticky="nsew")
+            {'name': '1', 'function': lambda: self.button_click('1'), 'row': 5, 'column': 0, 'columnspan': 1},
+            {'name': '2', 'function': lambda: self.button_click('2'), 'row': 5, 'column': 1, 'columnspan': 1},
+            {'name': '3', 'function': lambda: self.button_click('3'), 'row': 5, 'column': 2, 'columnspan': 1},
+            {'name': '+', 'function': lambda: self.button_click('+'), 'row': 5, 'column': 3, 'columnspan': 1},
 
-        delete_one = tkinter.Button(self, self.button_params, text='DEL',
-                                    command=self.button_delete).grid(row=2, column=1, sticky="nsew")
+            {'name': '0', 'function': lambda: self.button_click('0'), 'row': 6, 'column': 0, 'columnspan': 1},
+            {'name': '.', 'function': lambda: self.button_click('.'), 'row': 6, 'column': 1, 'columnspan': 1},
+            {'name': '=', 'function': lambda: self.button_equal(), 'row': 6, 'column': 2, 'columnspan': 2},
+        ]
 
-        delete_all = tkinter.Button(self, self.button_params, text='AC',
-                                    command=self.button_clear_all).grid(row=2, column=2, sticky="nsew")
+        for button in self.buttons:
+            tkinter.Button(self, self.button_params, text=button['name'], command=button['function'])\
+                .grid(row=button['row'], column=button['column'], columnspan = button['columnspan'], sticky="nsew")
 
-        div = tkinter.Button(self, self.button_params_main, text='/',
-                             command=lambda: self.button_click('/')).grid(row=2, column=3, sticky="nsew")
-
-        # 3 ряд
-        button_7 = tkinter.Button(self, self.button_params_main, text='7',
-                                  command=lambda: self.button_click('7')).grid(row=3, column=0, sticky="nsew")
-
-        button_8 = tkinter.Button(self, self.button_params_main, text='8',
-                                  command=lambda: self.button_click('8')).grid(row=3, column=1, sticky="nsew")
-
-        button_9 = tkinter.Button(self, self.button_params_main, text='9',
-                                  command=lambda: self.button_click('9')).grid(row=3, column=2, sticky="nsew")
-
-        mul = tkinter.Button(self, self.button_params_main, text='*',
-                             command=lambda: self.button_click('*')).grid(row=3, column=3, sticky="nsew")
-
-        # 4 ряд
-        button_4 = tkinter.Button(self, self.button_params_main, text='4',
-                                  command=lambda: self.button_click('4')).grid(row=4, column=0, sticky="nsew")
-
-        button_5 = tkinter.Button(self, self.button_params_main, text='5',
-                                  command=lambda: self.button_click('5')).grid(row=4, column=1, sticky="nsew")
-
-        button_6 = tkinter.Button(self, self.button_params_main, text='6',
-                                  command=lambda: self.button_click('6')).grid(row=4, column=2, sticky="nsew")
-
-        sub = tkinter.Button(self, self.button_params_main, text='-',
-                             command=lambda: self.button_click('-')).grid(row=4, column=3, sticky="nsew")
-
-        # 5 ряд
-        button_1 = tkinter.Button(self, self.button_params_main, text='1',
-                                  command=lambda: self.button_click('1')).grid(row=5, column=0, sticky="nsew")
-        button_2 = tkinter.Button(self, self.button_params_main, text='2',
-                                  command=lambda: self.button_click('2')).grid(row=5, column=1, sticky="nsew")
-        button_3 = tkinter.Button(self, self.button_params_main, text='3',
-                                  command=lambda: self.button_click('3')).grid(row=5, column=2, sticky="nsew")
-        add = tkinter.Button(self, self.button_params_main, text='+',
-                             command=lambda: self.button_click('+')).grid(row=5, column=3, sticky="nsew")
-
-        # 6 ряд
-        button_0 = tkinter.Button(self, self.button_params_main, text='0',
-                                  command=lambda: self.button_click('0')).grid(row=6, column=0, sticky="nsew")
-        point = tkinter.Button(self, self.button_params_main, text='.',
-                               command=lambda: self.button_click('.')).grid(row=6, column=1, sticky="nsew")
-        equal = tkinter.Button(self, self.button_params_main, text='=',
-                               command=self.button_equal).grid(row=6, columnspan=2, column=2, sticky="nsew")
 
     def button_click(self, char):
         """
