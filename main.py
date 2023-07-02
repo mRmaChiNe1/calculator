@@ -2,7 +2,6 @@ import tkinter
 from tkinter import *
 from tkinter import messagebox
 import math
-import numpy as np
 
 
 class Calculator(tkinter.Tk):
@@ -89,16 +88,12 @@ class Calculator(tkinter.Tk):
         """
         Метод для расчета арксинуса
         """
-        if 359.0 > float(self.calc_operator) > -359.0:
-            result = str(np.arcsin(math.radians(float(self.calc_operator))))
-            self.calc_operator = result
-            self.text_input.set(result)
-        elif float(self.calc_operator) == 360.0 or float(self.calc_operator) == -360.0:
-            result = str(np.arcsin(math.radians(0.0)))
+        if 1 >= float(self.calc_operator) >= -1:
+            result = str(math.asin(float(self.calc_operator)))
             self.calc_operator = result
             self.text_input.set(result)
         else:
-            messagebox.showinfo(title="Количество градусов", message="Введите градусы от -360 до 360")
+            messagebox.showinfo(title="Значение арксинуса", message="Введите значение от -1 до 1")
 
     def button_equal(self):
         """
